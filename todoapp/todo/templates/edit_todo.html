@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Todo{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="post" class="text-white" >
+        {% csrf_token %}
+        <h1 class="h-10 flex justify-center items-start font-bold text-2xl text-center">Edit Your Todo</h1>
+        {{form.as_p}}
+        <button action="submit" class="h-10 w-32 bg-red-600 p-2 rounded-md hover:bg-red-700">Done</button>
+        <a href="{% url "all_todos" %}"><button  class="h-10 w-32 bg-cyan-600 p-2 rounded-md hover:bg-cyan-700">Back</button></a>
+    </form>
+</div>
+{% endblock %}

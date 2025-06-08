@@ -8,7 +8,19 @@
     <title>{% block title %}TodoApp{% endblock %}</title>
     {% tailwind_css %}
 </head>
-<body>
+<body class="bg-zinc-900 text-white mx-8">
+    <div class="h-16 flex justify-between items-center" >
+        <h1 class="font-extrabold text-2xl text-cyan-600" ><a href="{% url "all_todos" %}">Todos</a></h1>
+        {% if user.is_authenticated %}
+        <form method='post' action="{% url "logout" %}">
+          {% csrf_token %}
+          <button class="h-10 w-20 bg-red-600 p-2 rounded-md hover:bg-red-700">Logout</button>
+        </form>
+        {% else %}
+        <a href="{% url "login" %}" class=''><button class="h-10 w-20 bg-cyan-600 p-2 rounded-md hover:bg-cyan-700">Login</button></a>
+        <a href="{% url "register" %}" class=''><button class="h-10 w-20 bg-cyan-600 p-2 rounded-md hover:bg-cyan-700">Register</button></a>
+        {% endif %}
+    </div>
     {% block content %}{% endblock %}
 </body>
 </html>
