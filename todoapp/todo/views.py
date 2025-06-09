@@ -4,11 +4,13 @@ from django.contrib.auth.decorators import login_required
 from .forms import TodoForm, UserRegisterationForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import login
+from django.http import JsonResponse
 
 # Create your views here.
+
 def all_todos(request):
     todos = Todo.objects.all().order_by('-created_at')
-    return render(request ,'todos.html', {'todos': todos})
+    return render(request ,'todos.html', {'todos': todos,})
 
 @login_required
 def add_todo(request):
@@ -49,9 +51,9 @@ def register(request):
         form = UserRegisterationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data('password1'))
+            user.set_password(form.cleaned_data['password1'])
             user.save()
-            login()
+            login(request, user)
             return redirect('all_todos')
     else:
         form = UserRegisterationForm()

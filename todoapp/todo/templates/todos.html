@@ -2,9 +2,12 @@
 {% block title %}My Todo App{% endblock %}
 {% block content %}
 <h1 class="h-10 flex justify-center items-start font-bold text-2xl text-center" >All Todos</h1>
+{% if user.is_authenticated %}
 <a class="flex justify-center items-center " href="{% url "add_todo" %}"><button class="h-10 w-28 bg-cyan-600 p-2 rounded-md hover:bg-cyan-700">Add Todo</button></a>
+{% endif %}
 <div class="container">
     {% for todo in todos %}
+    {% if todo.user == request.user %}
     <div class="w-full flex justify-around items-center my-4">
         <a href="{% url "edit_todo" todo.id %}"><button  class="h-10 w-20 bg-cyan-600 p-2 rounded-md hover:bg-cyan-700" >Edit</button></a> 
         {% if todo.todo_done %}
@@ -14,6 +17,8 @@
         {% endif %}
         <a href="{% url "delete_todo" todo.id %}"><button  class="h-10 w-20 bg-red-600 p-2 rounded-md hover:bg-red-700">Delete</button></a> 
     </div>
+    {% endif %}
+    
     {% endfor %}
 </div>
 {% endblock %}
